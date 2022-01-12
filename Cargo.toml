@@ -10,4 +10,5 @@ edition = "2021"
 publish = false
 
 [dependencies]
+clap = { version = "3" }
 git2 = "0.13"
