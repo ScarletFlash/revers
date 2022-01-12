@@ -14,7 +14,7 @@
 
 | Status | Feature                                                      |
 | -----: | :----------------------------------------------------------- |
-|     💡 | Print all commit hashes between Git commits or tags          |
+|     🏗️ | Print all commit hashes between Git commits or tags          |
 |     💡 | Print all commit messages between Git commits or tags        |
 |     💡 | Print changelog for changes made between Git commits or tags |
 |     💡 | Print version for changes made between Git commits or tags   |
