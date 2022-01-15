@@ -1,4 +1,6 @@
-# About
+<p align="center">
+  <img src="assets/logo/transparent-background_bright-logo_cropped.svg" />
+</p>
 
 **re**vers is a lightweight CLI tool for complete [SemVer](https://semver.org/) management based on [Conventional Commits](https://www.conventionalcommits.org/), implemented in [Rust](https://www.rust-lang.org/).
 
