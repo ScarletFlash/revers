@@ -1,0 +1,23 @@
+name: Do Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check_formatting:
+    runs-on: ubuntu-latest
+    name: Check formatting
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare toolchain
+        run: rustup toolchain install nightly
+      - name: Install formatter
+        run: rustup component add rustfmt --toolchain nightly
+      - name: Check codebase
+        run: cargo +nightly fmt --all -- --check && echo "All files matching configured formatting rules"
