@@ -21,3 +21,15 @@ jobs:
         run: rustup component add rustfmt --toolchain nightly
       - name: Check codebase
         run: cargo +nightly fmt --all -- --check && echo "All files matching configured formatting rules"
+
+  lint_sources:
+    runs-on: ubuntu-latest
+    name: Lint sources
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare toolchain
+        run: rustup toolchain install nightly
+      - name: Install linter
+        run: rustup component add clippy --toolchain nightly
+      - name: Check codebase
+        run: cargo +nightly clippy --all -- && echo "All files matching configured linting rules"
