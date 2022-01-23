@@ -1,3 +1,13 @@
+#![deny(clippy::correctness)]
+#![deny(clippy::suspicious)]
+#![deny(clippy::style)]
+#![deny(clippy::complexity)]
+#![deny(clippy::perf)]
+#![deny(clippy::pedantic)]
+#![deny(clippy::nursery)]
+#![deny(clippy::cargo)]
+#![allow(clippy::single_match, clippy::unused_unit)]
+
 use clap::{App, AppSettings, ArgMatches};
 
 mod subcommands;
