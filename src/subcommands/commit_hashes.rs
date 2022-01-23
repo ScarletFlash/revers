@@ -1,5 +1,7 @@
 use clap::{App, AppSettings, Arg, ArgMatches};
-use git2::{Repository, RepositoryState};
+use git2::{Branch, Odb, Reference, Repository};
+use std::env::current_dir;
+use std::path::PathBuf;
 
 pub fn get_app() -> App<'static> {
   return App::new("commit-hashes")
@@ -42,19 +44,29 @@ pub fn get_app() -> App<'static> {
 
 pub fn handle_matches(matches: &ArgMatches) -> () {
   match matches.subcommand() {
-    | Some(("commit-hashes", _sub_matches)) => {
-      println!("commit-hashes");
-
-      let repository = match Repository::open("./") {
-        | Ok(repository) => repository,
-        | Err(error) => panic!("failed to open: {}", error),
-      };
-
-      let path: &str = repository.path().to_str().unwrap();
-      println!("{}", String::from(path));
-
-      let state: RepositoryState = repository.state();
-    },
+    | Some(("commit-hashes", _sub_matches)) => get_commit_hashes(),
     | _ => (),
   }
+}
+
+fn get_commit_hashes() {
+  let current_dir_path: PathBuf = current_dir().unwrap();
+  let current_path: String = current_dir_path.to_str().unwrap().to_owned();
+
+  let repository: Repository = match Repository::open(current_path) {
+    | Ok(repository) => repository,
+    | Err(error) => panic!("Git repository not found: {}", error),
+  };
+
+  let is_head_detached: bool = repository.head_detached().unwrap_or(true);
+  assert!(!is_head_detached, "Can not access Git commits on detached HEAD");
+
+  let head: Reference = repository.head().unwrap();
+  assert!(head.is_branch(), "HEAD should be on branch to make commits interaction available");
+
+  let branch: Branch = Branch::wrap(head);
+
+  println!("{}", branch.name().unwrap().unwrap().to_owned());
+
+  let _object_database: Odb = repository.odb().unwrap();
 }
